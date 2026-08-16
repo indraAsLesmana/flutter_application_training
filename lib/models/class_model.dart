@@ -11,9 +11,9 @@ class ClassModel {
 
   factory ClassModel.fromJson(Map<String, dynamic> json) {
     return ClassModel(
-      id: json['id'],
-      tingkat: json['tingkat'],
-      namaKelas: json['namaKelas'],
+      id: (json['id'] ?? '').toString(),
+      tingkat: (json['tingkat'] ?? '').toString(),
+      namaKelas: (json['namaKelas'] ?? json['nama_kelas'] ?? '').toString(),
     );
   }
 
