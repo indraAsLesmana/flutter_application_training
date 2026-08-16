@@ -2,7 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_application_1/providers/auth_provider.dart';
 import 'package:flutter_application_1/providers/school_provider.dart';
 import 'package:flutter_application_1/repositories/auth_repository.dart';
-import 'package:flutter_application_1/screens/auth/register_screen.dart';
+import 'package:flutter_application_1/screens/auth/login_screen.dart';
+import 'package:flutter_application_1/screens/guru/teacher_home_screen.dart';
 import 'package:provider/provider.dart';
 
 import 'core/network/dio_client.dart';
@@ -36,9 +37,25 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Flutter Demo',
-      theme: ThemeData(colorScheme: .fromSeed(seedColor: Colors.deepPurple)),
-      home: const RegisterScreen(),
+      title: 'Aplikasi Pengumpulan Tugas',
+      theme: ThemeData(
+        colorScheme: ColorScheme.fromSeed(seedColor: Colors.blue),
+        useMaterial3: true,
+      ),
+      home: Consumer<AuthProvider>(
+        builder: (context, authProvider, _) {
+          if (authProvider.isInitializing) {
+            return const Scaffold(
+              body: Center(child: CircularProgressIndicator()),
+            );
+          }
+
+          if (!authProvider.isAuthenticated) {
+            return const LoginScreen();
+          }
+          return const TeacherHomeScreen();
+        },
+      ),
     );
   }
 }
