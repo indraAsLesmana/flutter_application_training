@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_application_1/providers/auth_provider.dart';
 import 'package:provider/provider.dart';
 
 import '../../providers/school_provider.dart';
@@ -50,32 +51,32 @@ class _RegisterScreenState extends State<RegisterScreen> {
       return;
     }
 
-    // final authProvider = context.read<AuthProvider>();
+    final authProvider = context.read<AuthProvider>();
 
-    // final success = await authProvider.register(
-    //   nama: _namaController.text,
-    //   role: _role,
-    //   nipNik: _nipNikController.text,
-    //   password: _passwordController.text,
-    //   email: _emailController.text.isEmpty ? null : _emailController.text,
-    //   classId: _role == 'siswa' ? _selectedClassId : null,
-    // );
+    final success = await authProvider.register(
+      nama: _namaController.text,
+      role: _role,
+      nipNik: _nipNikController.text,
+      password: _passwordController.text,
+      email: _emailController.text.isEmpty ? null : _emailController.text,
+      classId: _role == 'siswa' ? _selectedClassId : null,
+    );
 
-    // if (success && mounted) {
-    //   if (Navigator.canPop(context)) {
-    //     Navigator.pop(context);
-    //   }
-    // } else if (!success && mounted) {
-    //   ScaffoldMessenger.of(context).showSnackBar(
-    //     SnackBar(content: Text(authProvider.error ?? 'Gagal mendaftar')),
-    //   );
-    // }
+    if (success && mounted) {
+      if (Navigator.canPop(context)) {
+        Navigator.pop(context);
+      }
+    } else if (!success && mounted) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text(authProvider.error ?? 'Gagal mendaftar')),
+      );
+    }
   }
 
   @override
   Widget build(BuildContext context) {
     final schoolProvider = context.watch<SchoolProvider>();
-    // final authProvider = context.watch<AuthProvider>();
+    final authProvider = context.watch<AuthProvider>();
 
     // Extract unique Tingkat list (e.g. ['X', 'XI', 'XII'])
     final uniqueTingkatList = schoolProvider.classes
@@ -250,13 +251,13 @@ class _RegisterScreenState extends State<RegisterScreen> {
                         ),
                       ],
                       const SizedBox(height: 32),
-                      // ElevatedButton(
-                      //   onPressed: authProvider.isLoading ? null : _submit,
-                      //   child: authProvider.isLoading
-                      //       ? const CircularProgressIndicator()
-                      //       : const Text('Daftar'),
-                      // ),
-                      // const SizedBox(height: 16),
+                      ElevatedButton(
+                        onPressed: authProvider.isLoading ? null : _submit,
+                        child: authProvider.isLoading
+                            ? const CircularProgressIndicator()
+                            : const Text('Daftar'),
+                      ),
+                      const SizedBox(height: 16),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
