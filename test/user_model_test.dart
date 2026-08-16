@@ -1,5 +1,5 @@
-import 'package:flutter_test/flutter_test.dart';
 import 'package:flutter_application_1/models/user_model.dart';
+import 'package:flutter_test/flutter_test.dart';
 
 void main() {
   test('UserModel.fromJson supports camelCase backend response', () {
