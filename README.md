@@ -21,3 +21,5 @@ samples, guidance on mobile development, and a full API reference.
 fvm flutter pub get
 fvm flutter run --dart-define-from-file=config_dev.json   # Development (local API)
 fvm flutter run --dart-define-from-file=config_prod.json  # Production (Neon cloud)
+
+fvm flutter run -d chrome --dart-define-from-file=config_prod.json
