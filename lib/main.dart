@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/providers/auth_provider.dart';
 import 'package:flutter_application_1/providers/school_provider.dart';
+import 'package:flutter_application_1/providers/task_provider.dart';
 import 'package:flutter_application_1/repositories/auth_repository.dart';
+import 'package:flutter_application_1/repositories/task_repository.dart';
 import 'package:flutter_application_1/screens/auth/login_screen.dart';
 import 'package:flutter_application_1/screens/guru/teacher_home_screen.dart';
 import 'package:provider/provider.dart';
@@ -14,6 +16,7 @@ void main() {
   final dioClient = DioClient();
   final authRepo = AuthRepository(dioClient);
   final schoolRepo = SchoolRepository(dioClient);
+  final taskRepo = TaskRepository(dioClient);
 
   runApp(
     MultiProvider(
@@ -25,6 +28,7 @@ void main() {
         ChangeNotifierProvider(
           create: (_) => SchoolProvider(schoolRepo)..fetchClasses(),
         ),
+        ChangeNotifierProvider(create: (_) => TaskProvider(taskRepo)),
       ],
       child: const MyApp(),
     ),
