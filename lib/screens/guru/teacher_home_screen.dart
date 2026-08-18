@@ -6,6 +6,7 @@ import '../../providers/school_provider.dart';
 import '../../providers/task_provider.dart';
 import '../../widgets/create_task_form.dart';
 import '../../widgets/empty_state_widget.dart';
+import 'task_detail_screen.dart';
 
 class TeacherHomeScreen extends StatefulWidget {
   const TeacherHomeScreen({super.key});
@@ -167,148 +168,161 @@ class _TeacherHomeScreenState extends State<TeacherHomeScreen> {
                             shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(12),
                             ),
-                            child: Padding(
-                              padding: const EdgeInsets.all(16.0),
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Row(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceBetween,
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.center,
-                                    children: [
-                                      Expanded(
-                                        child: Wrap(
-                                          spacing: 6,
-                                          runSpacing: 4,
-                                          children: [
-                                            Chip(
-                                              label: Text(className),
-                                              visualDensity:
-                                                  VisualDensity.compact,
-                                            ),
-                                            if (task.isTeamTask)
+                            child: InkWell(
+                              onTap: () {
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (_) => TaskDetailScreen(
+                                      task: task,
+                                      className: className,
+                                    ),
+                                  ),
+                                );
+                              },
+                              child: Padding(
+                                padding: const EdgeInsets.all(16.0),
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceBetween,
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.center,
+                                      children: [
+                                        Expanded(
+                                          child: Wrap(
+                                            spacing: 6,
+                                            runSpacing: 4,
+                                            children: [
                                               Chip(
-                                                label: Text(
-                                                  'Kelompok (Maks ${task.maxTeamMembers})',
-                                                ),
-                                                avatar: const Icon(
-                                                  Icons.groups,
-                                                  size: 14,
-                                                  color: Colors.blue,
-                                                ),
-                                                backgroundColor:
-                                                    Colors.blue[50],
-                                                side: BorderSide(
-                                                  color: Colors.blue[300]!,
-                                                ),
+                                                label: Text(className),
                                                 visualDensity:
                                                     VisualDensity.compact,
                                               ),
-                                          ],
+                                              if (task.isTeamTask)
+                                                Chip(
+                                                  label: Text(
+                                                    'Kelompok (Maks ${task.maxTeamMembers})',
+                                                  ),
+                                                  avatar: const Icon(
+                                                    Icons.groups,
+                                                    size: 14,
+                                                    color: Colors.blue,
+                                                  ),
+                                                  backgroundColor:
+                                                      Colors.blue[50],
+                                                  side: BorderSide(
+                                                    color: Colors.blue[300]!,
+                                                  ),
+                                                  visualDensity:
+                                                      VisualDensity.compact,
+                                                ),
+                                            ],
+                                          ),
                                         ),
-                                      ),
-                                      const SizedBox(width: 8),
-                                      SelectableText(
-                                        'ID: ${task.id.substring(0, task.id.length > 8 ? 8 : task.id.length)}...',
-                                        style: TextStyle(
-                                          fontSize: 12,
-                                          color: Colors.grey[600],
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                  const SizedBox(height: 8),
-                                  Text(
-                                    task.description,
-                                    style: const TextStyle(
-                                      fontSize: 16,
-                                      fontWeight: FontWeight.bold,
-                                    ),
-                                  ),
-                                  const SizedBox(height: 12),
-                                  Row(
-                                    children: [
-                                      const Icon(
-                                        Icons.calendar_today,
-                                        size: 14,
-                                        color: Colors.grey,
-                                      ),
-                                      const SizedBox(width: 4),
-                                      Text(
-                                        'Mulai: ${task.startDate.split('T')[0]}',
-                                        style: TextStyle(
-                                          fontSize: 12,
-                                          color: Colors.grey[700],
-                                        ),
-                                      ),
-                                      const SizedBox(width: 16),
-                                      const Icon(
-                                        Icons.event,
-                                        size: 14,
-                                        color: Colors.redAccent,
-                                      ),
-                                      const SizedBox(width: 4),
-                                      Text(
-                                        'Tenggat: ${task.endDate.split('T')[0]}',
-                                        style: TextStyle(
-                                          fontSize: 12,
-                                          color: Colors.red[700],
-                                          fontWeight: FontWeight.bold,
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                  if (task.attachmentUrl != null &&
-                                      task.attachmentUrl!.isNotEmpty) ...[
-                                    const SizedBox(height: 8),
-                                    Row(
-                                      children: [
-                                        const Icon(
-                                          Icons.link,
-                                          size: 14,
-                                          color: Colors.blue,
-                                        ),
-                                        const SizedBox(width: 4),
-                                        Expanded(
-                                          child: Text(
-                                            task.attachmentUrl!,
-                                            style: const TextStyle(
-                                              fontSize: 12,
-                                              color: Colors.blue,
-                                            ),
-                                            overflow: TextOverflow.ellipsis,
+                                        const SizedBox(width: 8),
+                                        SelectableText(
+                                          'ID: ${task.id.substring(0, task.id.length > 8 ? 8 : task.id.length)}...',
+                                          style: TextStyle(
+                                            fontSize: 12,
+                                            color: Colors.grey[600],
                                           ),
                                         ),
                                       ],
                                     ),
-                                  ],
-                                  const Divider(height: 20),
-                                  Row(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceBetween,
-                                    children: [
-                                      Text(
-                                        'Ketuk untuk lihat detail pengumpulan',
-                                        style: TextStyle(
-                                          fontSize: 12,
+                                    const SizedBox(height: 8),
+                                    Text(
+                                      task.description,
+                                      style: const TextStyle(
+                                        fontSize: 16,
+                                        fontWeight: FontWeight.bold,
+                                      ),
+                                    ),
+                                    const SizedBox(height: 12),
+                                    Row(
+                                      children: [
+                                        const Icon(
+                                          Icons.calendar_today,
+                                          size: 14,
+                                          color: Colors.grey,
+                                        ),
+                                        const SizedBox(width: 4),
+                                        Text(
+                                          'Mulai: ${task.startDate.split('T')[0]}',
+                                          style: TextStyle(
+                                            fontSize: 12,
+                                            color: Colors.grey[700],
+                                          ),
+                                        ),
+                                        const SizedBox(width: 16),
+                                        const Icon(
+                                          Icons.event,
+                                          size: 14,
+                                          color: Colors.redAccent,
+                                        ),
+                                        const SizedBox(width: 4),
+                                        Text(
+                                          'Tenggat: ${task.endDate.split('T')[0]}',
+                                          style: TextStyle(
+                                            fontSize: 12,
+                                            color: Colors.red[700],
+                                            fontWeight: FontWeight.bold,
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                    if (task.attachmentUrl != null &&
+                                        task.attachmentUrl!.isNotEmpty) ...[
+                                      const SizedBox(height: 8),
+                                      Row(
+                                        children: [
+                                          const Icon(
+                                            Icons.link,
+                                            size: 14,
+                                            color: Colors.blue,
+                                          ),
+                                          const SizedBox(width: 4),
+                                          Expanded(
+                                            child: Text(
+                                              task.attachmentUrl!,
+                                              style: const TextStyle(
+                                                fontSize: 12,
+                                                color: Colors.blue,
+                                              ),
+                                              overflow: TextOverflow.ellipsis,
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    ],
+                                    const Divider(height: 20),
+                                    Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceBetween,
+                                      children: [
+                                        Text(
+                                          'Ketuk untuk lihat detail pengumpulan',
+                                          style: TextStyle(
+                                            fontSize: 12,
+                                            color: Theme.of(
+                                              context,
+                                            ).colorScheme.primary,
+                                            fontWeight: FontWeight.w500,
+                                          ),
+                                        ),
+                                        Icon(
+                                          Icons.chevron_right,
+                                          size: 18,
                                           color: Theme.of(
                                             context,
                                           ).colorScheme.primary,
-                                          fontWeight: FontWeight.w500,
                                         ),
-                                      ),
-                                      Icon(
-                                        Icons.chevron_right,
-                                        size: 18,
-                                        color: Theme.of(
-                                          context,
-                                        ).colorScheme.primary,
-                                      ),
-                                    ],
-                                  ),
-                                ],
+                                      ],
+                                    ),
+                                  ],
+                                ),
                               ),
                             ),
                           );
