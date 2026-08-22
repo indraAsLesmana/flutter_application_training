@@ -6,6 +6,7 @@ import 'package:flutter_application_1/repositories/auth_repository.dart';
 import 'package:flutter_application_1/repositories/task_repository.dart';
 import 'package:flutter_application_1/screens/auth/login_screen.dart';
 import 'package:flutter_application_1/screens/guru/teacher_home_screen.dart';
+import 'package:flutter_application_1/screens/siswa/student_home_screen.dart';
 import 'package:provider/provider.dart';
 
 import 'core/network/dio_client.dart';
@@ -57,7 +58,12 @@ class MyApp extends StatelessWidget {
           if (!authProvider.isAuthenticated) {
             return const LoginScreen();
           }
-          return const TeacherHomeScreen();
+
+          if (authProvider.currentUser?.role == 'guru') {
+            return const TeacherHomeScreen();
+          } else {
+            return const StudentHomeScreen();
+          }
         },
       ),
     );

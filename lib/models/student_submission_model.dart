@@ -1,30 +1,4 @@
-class TeamMemberInfo {
-  final String siswaId;
-  final String nama;
-  final String nipNik;
-
-  TeamMemberInfo({
-    required this.siswaId,
-    required this.nama,
-    required this.nipNik,
-  });
-
-  factory TeamMemberInfo.fromJson(Map<String, dynamic> json) {
-    return TeamMemberInfo(
-      siswaId: json['siswaId'] ?? json['siswa_id'] ?? json['id'] ?? '',
-      nama: json['nama'] ?? '',
-      nipNik: json['nipNik'] ?? json['nip_nik'] ?? '',
-    );
-  }
-
-  Map<String, dynamic> toJson() {
-    return {
-      'siswaId': siswaId,
-      'nama': nama,
-      'nipNik': nipNik,
-    };
-  }
-}
+import 'package:flutter_application_1/models/team_member_model.dart';
 
 class StudentSubmissionModel {
   final String siswaId;
@@ -53,7 +27,9 @@ class StudentSubmissionModel {
     final rawMembers = json['teamMembers'] ?? json['team_members'];
     List<TeamMemberInfo> membersList = [];
     if (rawMembers is List) {
-      membersList = rawMembers.map((e) => TeamMemberInfo.fromJson(e as Map<String, dynamic>)).toList();
+      membersList = rawMembers
+          .map((e) => TeamMemberInfo.fromJson(e as Map<String, dynamic>))
+          .toList();
     }
 
     return StudentSubmissionModel(
